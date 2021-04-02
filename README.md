@@ -1,3 +1,62 @@
+# Fond Proposal
+
+1. I will be creating a PERN stack app for my final project. Postgres, Express, React, Node.
+2. This app will be evenly focused on full-stack development.
+3. My aim is to make this a website that is also mobile-friendly.
+4. My goal is to help recipes be more accessible and sharable. I feel like many recipe websites are not well suited for screen readers. Also recipe websites tend to have a poor user experience.
+5. The target demographic for the app are people between the age of 18-40.
+6. I plan on collecting my own data (recipes) by web scraping and by having users scrape for their own recipes, that will also help populate the database.
+7. Project Approach:
+   1. DB Schema
+
+
+          | users        | 
+          |--------------|
+          | username     |
+          | password     |
+          | email        |
+          | is_admin     |
+          | is_confirmed |
+
+
+          | recipes      |
+          |--------------|
+          | id           |
+          | url          |
+          | raw_recipe   |
+          | title        |
+          | keywords     |
+          | organization |
+
+          | user_recipes |
+          |--------------|
+          | username     |
+          | recipe_id    |
+
+   2. Issues might run into with my API
+        
+        An issue that I may run into with my API is when a user searches by something other than keywords or title.
+
+   3. Sensitive Data
+
+        The only sensitive data that is stored currently is the password. This will be encrypted using Bcrypt.
+   4. Functionality the app will include
+
+        * Browsing and searching for recipes
+        * Exporting recipes 
+        * Scraping recipes, given a URL
+   5. User Flow
+
+        * An all users can browse recipes and scrape for recipes
+        * Authenticated users can also like recipes and share recipes to their email
+   6. Stretch Goals 
+
+        * Log In via Trello
+        * Export to Trello
+        * Export to Phone (stretch stretch goal via Twilio) 
+          * This would require me to ask for a phone number, which I do not like the idea of.
+  
+---
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRecipesFromAPI } from '../actions/recipes';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import RecipeCard from './RecipeCard';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
@@ -46,14 +45,15 @@ const RecipeList = () => {
 		);
 	});
 	return (
-		<Container maxWidth='md'>
+		<React.Fragment>
 			<div className='RecipeList'>This is a recipe List -- Add a search bar</div>
 			<div className='card-container'>
-				<Grid container spacing={3}>
+				<Grid container spacing={2} justify='space-around' alignItems='center'>
+					{renderRecipeCards}
 					{renderRecipeCards}
 				</Grid>
 			</div>
-		</Container>
+		</React.Fragment>
 	);
 };
 export default RecipeList;

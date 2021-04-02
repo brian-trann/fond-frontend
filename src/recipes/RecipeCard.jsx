@@ -25,7 +25,7 @@ const RecipeCard = ({ handleClick, recipeObj }) => {
 	const handleChildClick = () => {
 		handleClick(id);
 	};
-	const formattedTitle = title.length < 50 ? title : title.slice(0, 75) + '...';
+	const formattedTitle = title.length < 60 ? title : title.slice(0, 60) + '...';
 	const formattedDescription = recipe.description.slice(0, 120) + '...';
 	const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
 	return (

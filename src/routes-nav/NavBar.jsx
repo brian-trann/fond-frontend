@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-
+import logo from '../logo.svg';
 import MyNavButton from './MyNavButton';
 
 const useStyles = makeStyles(() => ({
@@ -22,7 +22,7 @@ const NavBar = () => {
 	// 		<React.Fragment>
 	// 			<MyNavButton to='/myrecipes' text='My Recipes' />
 	// 			<MyNavButton to='/account' text='Account' />
-	// 			<MyNavButton to='/signup' text='Log Out' />
+	// 			<MyNavButton to='/' text='Log Out' />
 	// 		</React.Fragment>
 	// 	);
 	// };
@@ -37,6 +37,7 @@ const NavBar = () => {
 		<div className={classes.root}>
 			<AppBar position='static'>
 				<Toolbar>
+					<img src={logo} className='App-logo' alt='logo' />
 					<Typography
 						variant='h6'
 						onClick={() => console.log('Home Click')}
@@ -44,7 +45,7 @@ const NavBar = () => {
 					>
 						Fond
 					</Typography>
-					<MyNavButton to='/' exact text='Home' />
+					<MyNavButton to='/' text='Home' />
 					<MyNavButton to='/recipes' text='Recipes' />
 					<MyNavButton to='/scrape' text='Scrape' />
 				</Toolbar>

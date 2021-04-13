@@ -27,12 +27,12 @@ const NavBar = () => {
 	// 	);
 	// };
 
-	// const renderUnAuthUser = () => (
-	// 	<React.Fragment>
-	// 		<MyNavButton to='/login' text='Log In' />
-	// 		<MyNavButton to='/signup' text='Sign Up' />
-	// 	</React.Fragment>
-	// );
+	const renderUnAuthUser = () => (
+		<React.Fragment>
+			<MyNavButton to='/login' text='Log In' />
+			<MyNavButton to='/signup' text='Sign Up' />
+		</React.Fragment>
+	);
 	return (
 		<div className={classes.root}>
 			<AppBar position='static'>
@@ -48,6 +48,7 @@ const NavBar = () => {
 					<MyNavButton to='/' text='Home' />
 					<MyNavButton to='/recipes' text='Recipes' />
 					<MyNavButton to='/scrape' text='Scrape' />
+					{renderUnAuthUser()}
 				</Toolbar>
 			</AppBar>
 		</div>

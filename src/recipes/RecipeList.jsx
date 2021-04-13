@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRecipesFromAPI } from '../actions/recipes';
+import FondApi from '../api';
 import { makeStyles } from '@material-ui/core/styles';
 import RecipeCard from './RecipeCard';
 import Grid from '@material-ui/core/Grid';
@@ -15,25 +16,43 @@ const useStyles = makeStyles((theme) => ({
 		color     : theme.palette.text.secondary
 	}
 }));
+
 const RecipeList = () => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const recipes = useSelector((st) => st.recipes);
+	// const recipes = useSelector((st) => st.recipes);
+	const [ recipes, setRecipes ] = useState({});
 
-	const isMissing = !Object.keys(recipes).length;
+	const [ limit, setLimit ] = useState(20);
+	const [ skip, setSkip ] = useState(0);
+
+	const nextRecipeBatch = () => {
+		setSkip(skip + limit);
+	};
 
 	const handleClick = (id) => {
 		history.push(`/recipes/${id}`);
 	};
 	useEffect(
 		() => {
-			if (isMissing) {
-				dispatch(getRecipesFromAPI());
-			}
+			const fetchRecipes = async (limit, skip) => {
+				const res = await FondApi.getRecipes(limit, skip);
+				const formattedRecipes = res.reduce((acc, curr) => {
+					const { id, url, raw_recipe, keywords, title } = curr;
+					const recipe = JSON.parse(raw_recipe);
+					return {
+						...acc,
+						[id] : { url, keywords, title, id: id, recipe }
+					};
+				}, {});
+				setRecipes((oldRecipes) => ({ ...oldRecipes, ...formattedRecipes }));
+			};
+			fetchRecipes(limit, skip);
 		},
-		[ isMissing, dispatch ]
+		[ limit, skip ]
 	);
+
 	const renderRecipeCards = Object.values(recipes).map((r) => {
 		return (
 			<RecipeCard
@@ -46,10 +65,14 @@ const RecipeList = () => {
 	});
 	return (
 		<React.Fragment>
-			<div className='RecipeList'>This is a recipe List -- Add a search bar</div>
 			<div className='card-container'>
-				<Grid container spacing={2} justify='space-around' alignItems='center'>
-					{renderRecipeCards}
+				<Grid
+					direction='row'
+					container
+					spacing={2}
+					justify='space-around'
+					alignItems='stretch'
+				>
 					{renderRecipeCards}
 				</Grid>
 			</div>

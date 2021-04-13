@@ -3,25 +3,32 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from '../homepage/HomePage';
 import RecipeList from '../recipes/RecipeList';
 import Recipe from '../recipes/Recipe';
-import Container from '@material-ui/core/Container';
-import ScrapeForm from '../scrape/ScrapeForm';
+import SignupForm from '../auth/SignupForm';
+import LoginForm from '../auth/LoginForm';
+import ScrapeForm from '../common/ScrapeForm';
+import SearchForm from '../common/SearchForm';
 const Routes = () => {
 	return (
 		<Switch>
-			<Container maxWidth='md'>
-				<Route exact path='/'>
-					<HomePage />
-				</Route>
-				<Route exact path='/recipes'>
-					<RecipeList />
-				</Route>
-				<Route exact path='/recipes/:id'>
-					<Recipe />
-				</Route>
-				<Route exact path='/scrape'>
-					<ScrapeForm />
-				</Route>
-			</Container>
+			<Route exact path='/'>
+				<HomePage />
+			</Route>
+			<Route exact path='/signup'>
+				<SignupForm />
+			</Route>
+			<Route exact path='/login'>
+				<LoginForm />
+			</Route>
+			<Route exact path='/recipes'>
+				<SearchForm />
+				<RecipeList />
+			</Route>
+			<Route exact path='/recipes/:id'>
+				<Recipe />
+			</Route>
+			<Route exact path='/scrape'>
+				<ScrapeForm />
+			</Route>
 			<Redirect to='/' />
 		</Switch>
 	);

@@ -20,6 +20,7 @@ const useStyles = makeStyles({
 
 const RecipeCard = ({ handleClick, recipeObj }) => {
 	const classes = useStyles();
+
 	const { recipe, title, id } = recipeObj;
 
 	const handleChildClick = () => {

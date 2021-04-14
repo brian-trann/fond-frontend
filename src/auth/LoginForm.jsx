@@ -1,5 +1,8 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { getUserLoginToken } from '../actions/user';
 import MyTextField from '../common/MyTextField';
 import { Button, Typography } from '@material-ui/core';
 import * as yup from 'yup';
@@ -10,18 +13,27 @@ const validationSchema = yup.object({
 });
 
 const LoginForm = () => {
+	const dispatch = useDispatch();
+	const history = useHistory();
 	return (
 		<Formik
 			initialValues={{ email: '', password: '' }}
 			validationSchema={validationSchema}
-			onSubmit={(data, { setSubmitting }) => {
-				// setSubmitting(true);
+			onSubmit={(data, { setSubmitting, resetForm }) => {
+				setSubmitting(true);
 				// make async call
-
-				console.log('submit');
-				console.log('data');
-				console.log(data);
-				// setSubmitting(false);
+				dispatch(getUserLoginToken(data))
+					.then(() => {
+						history.push('/');
+					})
+					.catch((e) => {
+						resetForm({
+							values  : { email: data.email, password: '' },
+							errors  : { email: e[0], password: e[0] },
+							touched : { password: true }
+						});
+						setSubmitting(false);
+					});
 			}}
 		>
 			{({ values, errors, handleSubmit }) => (

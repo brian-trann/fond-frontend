@@ -1,30 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { getRecipesFromAPI } from '../actions/recipes';
+// import { useDispatch ,useSelector} from 'react-redux';
 import FondApi from '../api';
 import { makeStyles } from '@material-ui/core/styles';
 import RecipeCard from './RecipeCard';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from 'react-router-dom';
+import MyButton from '../common/MyButton';
 const useStyles = makeStyles((theme) => ({
-	root       : {
+	root           : {
 		flexGrow : 1
 	},
-	recipeCard : {
-		padding   : theme.spacing(3),
-		textAlign : 'center',
-		color     : theme.palette.text.secondary
+	// recipeCard     : {
+	// 	padding   : theme.spacing(3),
+	// 	textAlign : 'center',
+	// 	color     : theme.palette.text.secondary
+	// },
+	paginateButton : {
+		padding       : theme.spacing(2),
+		display       : 'flex',
+		flexDirection : 'column',
+		alignItems    : 'center'
 	}
 }));
 
 const RecipeList = () => {
 	const classes = useStyles();
-	const dispatch = useDispatch();
 	const history = useHistory();
+	// const dispatch = useDispatch();
 	// const recipes = useSelector((st) => st.recipes);
 	const [ recipes, setRecipes ] = useState({});
 
-	const [ limit, setLimit ] = useState(20);
+	const [ limit ] = useState(15);
 	const [ skip, setSkip ] = useState(0);
 
 	const nextRecipeBatch = () => {
@@ -75,6 +81,14 @@ const RecipeList = () => {
 				>
 					{renderRecipeCards}
 				</Grid>
+			</div>
+			<div className={classes.paginateButton}>
+				<MyButton
+					text='More Recipes'
+					onClick={nextRecipeBatch}
+					size='large'
+					variant='outlined'
+				/>
 			</div>
 		</React.Fragment>
 	);

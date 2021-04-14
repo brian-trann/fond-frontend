@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
+import { decode } from 'html-entities';
 import { makeStyles } from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
@@ -55,21 +56,27 @@ const Recipe = () => {
 	//
 	// WILL NEED TO MAKE A RENDER AUTHOR card
 	const renderInstructions = (recipe) => {
-		return recipe.recipeInstructions.map((step, i) => (
-			<p key={i}>
-				{i + 1}. {step.text}
-			</p>
-		));
+		return recipe.recipeInstructions.map((step, i) => {
+			const decodedStep = decode(step.text);
+			return (
+				<p key={i}>
+					{i + 1}. {decodedStep}
+				</p>
+			);
+		});
 	};
 
 	const renderIngredients = (recipe) => {
 		const ingredients = recipe.recipeIngredient.map((item, i) => {
-			return <li key={i}>{item}</li>;
+			const decodedItem = decode(item);
+			return <li key={i}>{decodedItem}</li>;
 		});
 		return <ul>{ingredients}</ul>;
 	};
 	const renderRecipe = (recipeObj) => {
 		const { title, recipe } = recipeObj;
+		const decodedTitle = decode(title);
+		const decodedDescription = decode(recipe.description);
 		return (
 			<div className='Recipe-container'>
 				<div className='Recipe-image'>
@@ -77,10 +84,10 @@ const Recipe = () => {
 						<div className={classes.details}>
 							<CardContent className={classes.content}>
 								<Typography component='h5' variant='h5'>
-									{title}
+									{decodedTitle}
 								</Typography>
 								<Typography variant='subtitle1' color='textSecondary'>
-									{recipe.description}
+									{decodedDescription}
 								</Typography>
 							</CardContent>
 						</div>
@@ -88,8 +95,8 @@ const Recipe = () => {
 							className={classes.media}
 							component='img'
 							src={recipe.image[0]}
-							title={title}
-							alt={recipe.description}
+							title={decodedTitle}
+							alt={decodedDescription}
 						/>
 					</Card>
 				</div>
@@ -99,33 +106,6 @@ const Recipe = () => {
 		);
 	};
 
-	// return (
-	// 	<div className='Recipe-container'>
-	// 		<div className='Recipe-image'>
-	// 			<Card className={classes.root}>
-	// 				<div className={classes.details}>
-	// 					<CardContent className={classes.content}>
-	// 						<Typography component='h5' variant='h5'>
-	// 							{title}
-	// 						</Typography>
-	// 						<Typography variant='subtitle1' color='textSecondary'>
-	// 							{recipe.description}
-	// 						</Typography>
-	// 					</CardContent>
-	// 				</div>
-	// 				<CardMedia
-	// 					className={classes.media}
-	// 					component='img'
-	// 					src={recipe.image[0]}
-	// 					title={title}
-	// 					alt={recipe.description}
-	// 				/>
-	// 			</Card>
-	// 		</div>
-	// 		<div className='Recipe-ingredients'>{renderIngredients(recipe)}</div>
-	// 		<div className='Recipe-instructions'>{renderInstructions(recipe)}</div>
-	// 	</div>
-	// );
 	return (
 		<React.Fragment>
 			{Object.keys(recipeObj).length > 0 ? renderRecipe(recipeObj) : <p>Loading</p>}

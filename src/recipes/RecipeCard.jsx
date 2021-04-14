@@ -5,17 +5,30 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import { decode } from 'html-entities';
+import MyButton from '../common/MyButton';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles({
-	root  : {
-		maxWidth : 285
+	root            : {
+		maxWidth      : 285,
+		height        : '100%',
+		display       : 'flex',
+		flexDirection : 'column'
 	},
-	media : {
+	media           : {
 		height : 140
+	},
+	cardBody        : {
+		marginBottom : 'auto'
+	},
+	cardDescription : {
+		justify : 'flex-start'
 	}
+	// actions  : {
+	// 	marginTop : 'auto'
+	// }
 });
 
 const RecipeCard = ({ handleClick, recipeObj }) => {
@@ -26,13 +39,16 @@ const RecipeCard = ({ handleClick, recipeObj }) => {
 	const handleChildClick = () => {
 		handleClick(id);
 	};
-	const formattedTitle = title.length < 60 ? title : title.slice(0, 60) + '...';
-	const formattedDescription = recipe.description.slice(0, 120) + '...';
+	const decodedTitle = decode(title);
+	const decodedDescription = decode(recipe.description);
+	const formattedTitle =
+		decodedTitle.length < 40 ? decodedTitle : decodedTitle.slice(0, 40) + '...';
+	const formattedDescription = decodedDescription.slice(0, 120) + '...';
 	const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
 	return (
 		<Grid item>
 			<Card className={classes.root}>
-				<CardActionArea onClick={handleChildClick}>
+				<CardActionArea className={classes.cardBody} onClick={handleChildClick}>
 					<CardMedia
 						className={classes.media}
 						image={recipe.image[avgImgQualityIdx]}
@@ -42,18 +58,18 @@ const RecipeCard = ({ handleClick, recipeObj }) => {
 						<Typography gutterBottom variant='h5' component='h2'>
 							{formattedTitle}
 						</Typography>
-						<Typography variant='body2' color='textSecondary' component='p'>
+						<Typography
+							className={classes.cardDescription}
+							variant='body2'
+							color='textSecondary'
+							component='p'
+						>
 							{formattedDescription}
 						</Typography>
 					</CardContent>
 				</CardActionArea>
-				<CardActions>
-					<Button size='small' color='primary'>
-						Share
-					</Button>
-					<Button size='small' color='primary'>
-						Learn More
-					</Button>
+				<CardActions className={classes.actions}>
+					<MyButton size='small' text='Add' />
 				</CardActions>
 			</Card>
 		</Grid>

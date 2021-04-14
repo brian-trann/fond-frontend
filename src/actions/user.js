@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_SIGNUP } from './types';
+import { USER_LOGIN, USER_SIGNUP, USER_LOGOUT } from './types';
 import FondApi from '../api';
 
 const getUserLoginToken = (data) => {
@@ -7,8 +7,8 @@ const getUserLoginToken = (data) => {
 		dispatch(gotLoginToken(res));
 	};
 };
-const gotLoginToken = (token) => {
-	return { type: USER_LOGIN, payload: token };
+const gotLoginToken = (data) => {
+	return { type: USER_LOGIN, payload: data };
 };
 
 const getUserSignupToken = (data) => {
@@ -17,8 +17,11 @@ const getUserSignupToken = (data) => {
 		dispatch(gotSignupToken(res));
 	};
 };
-const gotSignupToken = (token) => {
-	return { type: USER_SIGNUP, payload: token };
+const gotSignupToken = (data) => {
+	return { type: USER_SIGNUP, payload: data };
+};
+const userLogout = () => {
+	return { type: USER_LOGOUT };
 };
 
-export { getUserLoginToken, getUserSignupToken };
+export { getUserLoginToken, getUserSignupToken, userLogout };

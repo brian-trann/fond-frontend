@@ -7,11 +7,18 @@ const useStyles = makeStyles((theme) => ({
 		}
 	}
 }));
-const MyButton = ({ text, onClick, variant, color = 'primary', size = 'medium' }) => {
+const MyButton = ({
+	text,
+	onClick,
+	variant,
+	color = 'primary',
+	size = 'medium',
+	type = 'submit'
+}) => {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
-			<Button variant={variant} color={color} onClick={onClick} size={size}>
+			<Button variant={variant} color={color} type={type} onClick={onClick} size={size}>
 				{text}
 			</Button>
 		</div>

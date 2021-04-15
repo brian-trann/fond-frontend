@@ -1,31 +1,32 @@
 import React, { useEffect, useState } from 'react';
 // import { useDispatch ,useSelector} from 'react-redux';
 import FondApi from '../api';
-import { makeStyles } from '@material-ui/core/styles';
-import RecipeCard from './RecipeCard';
-import Grid from '@material-ui/core/Grid';
-import { useHistory } from 'react-router-dom';
-import MyButton from '../common/MyButton';
-const useStyles = makeStyles((theme) => ({
-	root           : {
-		flexGrow : 1
-	},
-	// recipeCard     : {
-	// 	padding   : theme.spacing(3),
-	// 	textAlign : 'center',
-	// 	color     : theme.palette.text.secondary
-	// },
-	paginateButton : {
-		padding       : theme.spacing(2),
-		display       : 'flex',
-		flexDirection : 'column',
-		alignItems    : 'center'
-	}
-}));
+// import { makeStyles } from '@material-ui/core/styles';
+// import RecipeCard from './RecipeCard';
+// import Grid from '@material-ui/core/Grid';
+// import { useHistory } from 'react-router-dom';
+// import MyButton from '../common/MyButton';
+import GenericList from './GenericList';
+// const useStyles = makeStyles((theme) => ({
+// root           : {
+// 	flexGrow : 1
+// },
+// recipeCard     : {
+// 	padding   : theme.spacing(3),
+// 	textAlign : 'center',
+// 	color     : theme.palette.text.secondary
+// },
+// 	paginateButton : {
+// 		padding       : theme.spacing(2),
+// 		display       : 'flex',
+// 		flexDirection : 'column',
+// 		alignItems    : 'center'
+// 	}
+// }));
 
 const RecipeList = () => {
-	const classes = useStyles();
-	const history = useHistory();
+	// const classes = useStyles();
+	// const history = useHistory();
 	// const dispatch = useDispatch();
 	// const recipes = useSelector((st) => st.recipes);
 	const [ recipes, setRecipes ] = useState({});
@@ -37,9 +38,9 @@ const RecipeList = () => {
 		setSkip(skip + limit);
 	};
 
-	const handleClick = (id) => {
-		history.push(`/recipes/${id}`);
-	};
+	// const handleClick = (id) => {
+	// 	history.push(`/recipes/${id}`);
+	// };
 	useEffect(
 		() => {
 			const fetchRecipes = async (limit, skip) => {
@@ -59,19 +60,19 @@ const RecipeList = () => {
 		[ limit, skip ]
 	);
 
-	const renderRecipeCards = Object.values(recipes).map((r) => {
-		return (
-			<RecipeCard
-				handleClick={handleClick}
-				key={r.id}
-				className={classes.recipeCard}
-				recipeObj={r}
-			/>
-		);
-	});
+	// const renderRecipeCards = Object.values(recipes).map((r) => {
+	// 	return (
+	// 		<RecipeCard
+	// 			handleClick={handleClick}
+	// 			key={r.id}
+	// 			className={classes.recipeCard}
+	// 			recipeObj={r}
+	// 		/>
+	// 	);
+	// });
 	return (
 		<React.Fragment>
-			<div className='card-container'>
+			{/* <div className='card-container'>
 				<Grid
 					direction='row'
 					container
@@ -89,7 +90,8 @@ const RecipeList = () => {
 					size='large'
 					variant='outlined'
 				/>
-			</div>
+			</div> */}
+			<GenericList recipes={recipes} paginateHandler={nextRecipeBatch} />
 		</React.Fragment>
 	);
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
+
 import * as yup from 'yup';
 import './ScrapeForm.css';
 

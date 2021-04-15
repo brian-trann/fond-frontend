@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from '../homepage/HomePage';
 import RecipeList from '../recipes/RecipeList';
+import MyRecipeList from '../recipes/MyRecipeList';
 import Recipe from '../recipes/Recipe';
 import SignupForm from '../auth/SignupForm';
 import LoginForm from '../auth/LoginForm';
@@ -25,6 +26,10 @@ const Routes = () => {
 			</Route>
 			<Route exact path='/recipes/:id'>
 				<Recipe />
+			</Route>
+			<Route exact path='/myrecipes'>
+				<SearchForm />
+				<MyRecipeList />
 			</Route>
 			<Route exact path='/scrape'>
 				<ScrapeForm />

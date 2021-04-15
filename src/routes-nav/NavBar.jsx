@@ -4,9 +4,10 @@ import { userLogout } from '../actions/user';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+
 import logo from '../logo.svg';
 import MyNavButton from './MyNavButton';
+import MyNavTypography from './MyNavTypography';
 
 const useStyles = makeStyles(() => ({
 	root  : {
@@ -45,13 +46,7 @@ const NavBar = () => {
 			<AppBar position='static'>
 				<Toolbar>
 					<img src={logo} className='App-logo' alt='logo' />
-					<Typography
-						variant='h6'
-						onClick={() => console.log('Home Click')}
-						className={classes.title}
-					>
-						Fond
-					</Typography>
+					<MyNavTypography to='/' text='Fond' className={classes.title} />
 					<MyNavButton to='/' text='Home' />
 					<MyNavButton to='/recipes' text='Recipes' />
 					<MyNavButton to='/scrape' text='Scrape' />

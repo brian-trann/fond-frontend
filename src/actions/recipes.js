@@ -1,16 +1,11 @@
-import axios from 'axios';
-import { LOAD_RECIPES } from './types';
-const API_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
-// REFACTOR TO USE FondApi.js
-const getRecipesFromAPI = () => {
-	return async function(dispatch) {
-		let limit = 20;
-		let skip = 0;
-		// make this only for getting user recieps
-		const res = await axios.get(`${API_URL}/recipe?limit=${limit}&skip=${skip}`);
-		console.log('limit ', limit);
+import FondApi from '../api';
+import { USER_RECIPES, USER_LIKE_RECIPE, USER_UNLIKE_RECIPE } from './types';
 
-		const recipes = res.data.recipes.reduce((acc, curr) => {
+const getUserRecipes = (username) => {
+	// Extract only the recipes...
+	return async (dispatch) => {
+		const res = await FondApi.getCurrentUser(username);
+		const recipes = res.user.recipes.reduce((acc, curr) => {
 			const { id, url, raw_recipe, keywords, title } = curr;
 			const recipe = JSON.parse(raw_recipe);
 			return {
@@ -19,10 +14,34 @@ const getRecipesFromAPI = () => {
 			};
 		}, {});
 
-		dispatch(gotRecipes(recipes));
+		dispatch(gotUserRecipes(recipes));
 	};
 };
-const gotRecipes = (recipes) => {
-	return { type: LOAD_RECIPES, payload: recipes };
+const gotUserRecipes = (recipes) => {
+	return { type: USER_RECIPES, payload: recipes };
 };
-export { getRecipesFromAPI };
+const postUserRecipeLike = (username, recipeId) => {
+	return async (dispatch) => {
+		const res = await FondApi.likeRecipe(username, recipeId);
+
+		const { id, url, raw_recipe, keywords, title } = res.recipe;
+
+		const recipeParsed = JSON.parse(raw_recipe);
+		const recipe = { [id]: { url, keywords, title, recipe: recipeParsed, id: id } };
+		dispatch(gotUserRecipeLike(recipe));
+	};
+};
+const gotUserRecipeLike = (recipe) => {
+	return { type: USER_LIKE_RECIPE, payload: recipe };
+};
+const postUserRecipeUnlike = (username, recipeId) => {
+	return async (dispatch) => {
+		const res = await FondApi.unlikeRecipe(username, recipeId);
+		const id = res.unlike;
+		dispatch(gotUserRecipeUnlike(id));
+	};
+};
+const gotUserRecipeUnlike = (id) => {
+	return { type: USER_UNLIKE_RECIPE, payload: id };
+};
+export { getUserRecipes, postUserRecipeLike, postUserRecipeUnlike };

@@ -2,7 +2,7 @@ import { USER_LOGIN, USER_SIGNUP, USER_LOGOUT } from './types';
 import FondApi from '../api';
 
 const getUserLoginToken = (data) => {
-	return async function(dispatch) {
+	return async (dispatch) => {
 		const res = await FondApi.login(data);
 		dispatch(gotLoginToken(res));
 	};

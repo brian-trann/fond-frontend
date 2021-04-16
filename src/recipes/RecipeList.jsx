@@ -38,9 +38,11 @@ const RecipeList = () => {
 		setSkip(skip + limit);
 	};
 
-	// const handleClick = (id) => {
-	// 	history.push(`/recipes/${id}`);
-	// };
+	const searchRecipeDb = (words) => {
+		console.log('search db');
+		console.log(words);
+	};
+
 	useEffect(
 		() => {
 			const fetchRecipes = async (limit, skip) => {
@@ -56,6 +58,7 @@ const RecipeList = () => {
 				setRecipes((oldRecipes) => ({ ...oldRecipes, ...formattedRecipes }));
 			};
 			fetchRecipes(limit, skip);
+			console.log('fetching 	');
 		},
 		[ limit, skip ]
 	);
@@ -91,7 +94,11 @@ const RecipeList = () => {
 					variant='outlined'
 				/>
 			</div> */}
-			<GenericList recipes={recipes} paginateHandler={nextRecipeBatch} />
+			<GenericList
+				recipes={recipes}
+				paginateHandler={nextRecipeBatch}
+				searchRecipeDb={searchRecipeDb}
+			/>
 		</React.Fragment>
 	);
 };

@@ -1,10 +1,10 @@
 import FondApi from '../api';
 import { USER_RECIPES, USER_LIKE_RECIPE, USER_UNLIKE_RECIPE } from './types';
 
-const getUserRecipes = (username) => {
+const getUserRecipes = (username, token) => {
 	// Extract only the recipes...
 	return async (dispatch) => {
-		const res = await FondApi.getCurrentUser(username);
+		const res = await FondApi.getCurrentUser(username, token);
 		const recipes = res.user.recipes.reduce((acc, curr) => {
 			const { id, url, raw_recipe, keywords, title } = curr;
 			const recipe = JSON.parse(raw_recipe);

@@ -2,8 +2,8 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
-import './SearchForm.css';
-const SearchForm = () => {
+
+const SearchForm = ({ userRecipes, handleSearch }) => {
 	return (
 		<Formik
 			initialValues={{ search: '' }}
@@ -11,9 +11,7 @@ const SearchForm = () => {
 				// setSubmitting(true);
 				// make async call
 
-				console.log('submit');
-				console.log('data');
-				console.log(data);
+				handleSearch(data.search);
 				// setSubmitting(false);
 			}}
 		>

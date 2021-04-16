@@ -4,7 +4,6 @@ import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
 
 import * as yup from 'yup';
-import './ScrapeForm.css';
 
 const validationSchema = yup.object({
 	url : yup.string().required().url()

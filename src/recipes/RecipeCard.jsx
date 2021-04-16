@@ -59,7 +59,7 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes }) => {
 				});
 			}
 		} else {
-			console.log('no token -- Redirect to making an account');
+			console.log('no token -- Redirect to making an account ');
 		}
 	};
 	const decodedTitle = decode(title);

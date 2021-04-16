@@ -6,7 +6,7 @@ import Grid from '@material-ui/core/Grid';
 import MyButton from '../common/MyButton';
 import { isEmpty } from '../helpers/helpers';
 import { useSelector } from 'react-redux';
-
+import SearchForm from '../common/SearchForm';
 const useStyles = makeStyles((theme) => ({
 	paginateButton : {
 		padding       : theme.spacing(2),
@@ -16,7 +16,13 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-const GenericList = ({ recipes, paginateHandler, userRecipes = false }) => {
+const GenericList = ({
+	recipes,
+	paginateHandler,
+	searchRecipeDb,
+	searchRecipeStore,
+	userRecipes = false
+}) => {
 	const classes = useStyles();
 	const history = useHistory();
 	const recipesState = useSelector((st) => st.recipes);
@@ -46,9 +52,20 @@ const GenericList = ({ recipes, paginateHandler, userRecipes = false }) => {
 			</div>
 		);
 	};
+	const handleSearch = (searchWords) => {
+		if (userRecipes) {
+			searchRecipeStore(searchWords);
+		} else {
+			searchRecipeDb(searchWords);
+		}
+	};
+
 	return (
 		<React.Fragment>
 			<div className='card-container'>
+				<div>
+					<SearchForm userRecipes={userRecipes} handleSearch={handleSearch} />
+				</div>
 				<Grid
 					direction='row'
 					container

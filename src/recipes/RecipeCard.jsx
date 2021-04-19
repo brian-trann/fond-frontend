@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import jwt_decode from 'jwt-decode';
 import { postUserRecipeLike, postUserRecipeUnlike } from '../actions/recipes';
-
+import noImg from '../assets/no-img.jpg';
 const useStyles = makeStyles({
 	root            : {
 		maxWidth      : 285,
@@ -74,7 +74,7 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes }) => {
 				<CardActionArea className={classes.cardBody} onClick={handleChildClick}>
 					<CardMedia
 						className={classes.media}
-						image={recipe.image[avgImgQualityIdx]}
+						image={recipe.image[avgImgQualityIdx] || noImg}
 						title={decodedTitle}
 					/>
 					<CardContent>

@@ -3,6 +3,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || 'http://localhost:3001';
 
 class FondApi {
 	static async request(endpoint, data = {}, token = 'no-token', method = 'get') {
+		// some routes on the backend will require an auth token
 		console.debug('API Call:', endpoint, data, method);
 
 		const url = `${BASE_URL}/${endpoint}`;
@@ -20,8 +21,8 @@ class FondApi {
 	// Individual API Routes
 
 	/** Get Recipes on homepage */
-	static async getRecipes(limit, skip) {
-		const res = await this.request(`recipe?limit=${limit}&skip=${skip}`);
+	static async getRecipes(limit, skip, search) {
+		const res = await this.request('recipe', { limit, skip, search });
 		return res.recipes;
 	}
 	/** Get Recipe by ID */
@@ -65,6 +66,11 @@ class FondApi {
 			'no-token',
 			'post'
 		);
+		return res;
+	}
+	/** Try to scrape recipe */
+	static async scrape(data) {
+		const res = await this.request('recipe/scrape', data, 'no-token', 'post');
 		return res;
 	}
 }

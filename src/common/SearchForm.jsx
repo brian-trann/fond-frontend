@@ -7,12 +7,13 @@ const SearchForm = ({ userRecipes, handleSearch }) => {
 	return (
 		<Formik
 			initialValues={{ search: '' }}
-			onSubmit={(data, { setSubmitting }) => {
-				// setSubmitting(true);
+			onSubmit={(data, { setSubmitting, resetForm }) => {
+				setSubmitting(true);
 				// make async call
 
 				handleSearch(data.search);
-				// setSubmitting(false);
+				setSubmitting(false);
+				resetForm();
 			}}
 		>
 			{({ values, errors, handleSubmit }) => (

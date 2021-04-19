@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import jwt_decode from 'jwt-decode';
 
 import GenericList from './GenericList';
 import { isEmpty } from '../helpers/helpers';
 import { getUserRecipes } from '../actions/recipes';
 
+const useStyles = makeStyles(() => ({
+	emptyRecipes : {
+		textAlign : 'center',
+		marginTop : '2rem'
+	}
+}));
+
 const MyRecipeList = () => {
+	const classes = useStyles();
 	const dispatch = useDispatch();
 	const recipes = useSelector((st) => st.recipes);
 	const token = useSelector((st) => st.user.token);
@@ -48,11 +57,14 @@ const MyRecipeList = () => {
 		},
 		[ username, dispatch, token, recipes ]
 	);
+	const noRecipesLiked = () => (
+		<p className={classes.emptyRecipes}>You have not added any recipes yet!</p>
+	);
 
 	return (
 		<React.Fragment>
 			{isEmpty(recipes) ? (
-				<p>empty</p>
+				noRecipesLiked()
 			) : !searching ? (
 				<GenericList
 					userRecipes={true}

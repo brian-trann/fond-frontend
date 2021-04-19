@@ -2,26 +2,32 @@ import React from 'react';
 import { Formik, Form } from 'formik';
 import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
-
+import FondApi from '../api';
+import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 
 const validationSchema = yup.object({
 	url : yup.string().required().url()
 });
 const ScrapeForm = () => {
+	const history = useHistory();
 	return (
 		<Formik
 			initialValues={{ url: '' }}
 			validationSchema={validationSchema}
-			onSubmit={(data, { setSubmitting }) => {
+			onSubmit={async (data, { setSubmitting, resetForm }) => {
 				setSubmitting(true);
-				// make async call
-				// use middleware to check url
 
-				console.log('submit');
-				console.log('data');
-				console.log(data);
-				setSubmitting(false);
+				try {
+					const res = await FondApi.scrape(data);
+					history.push(`/recipes/${res.recipe.id}`);
+				} catch (error) {
+					resetForm();
+					console.error('Something went wrong!', error);
+					console.log('display failed scrape component');
+				} finally {
+					setSubmitting(false);
+				}
 			}}
 		>
 			{({ values, errors, handleSubmit }) => (

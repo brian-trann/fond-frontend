@@ -8,7 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import FondApi from '../api';
-
+import noImg from '../assets/no-img.jpg';
 const useStyles = makeStyles(() => ({
 	root        : {
 		display      : 'flex',
@@ -50,18 +50,16 @@ const Recipe = () => {
 			};
 
 			if (recipesInStore[id]) {
-				console.log('IN THE STORE');
+				
 				setRecipeObj(() => ({ ...recipesInStore[id] }));
 			} else {
-				console.log('request made');
+				
 				fetchRecipe(id);
 			}
 		},
 		[ id, recipesInStore ]
 	);
-
-	//
-	// WILL NEED TO MAKE A RENDER AUTHOR card
+	
 	const renderInstructions = (recipe) => {
 		return recipe.recipeInstructions.map((step, i) => {
 			const decodedStep = decode(step.text);
@@ -84,10 +82,16 @@ const Recipe = () => {
 		const { title, recipe, url } = recipeObj;
 		const decodedTitle = decode(title);
 		const decodedDescription = decode(recipe.description);
+		const author = Array.isArray(recipe?.author) ? recipe.author[0] : recipe.author
+		
 		return (
 			<div className='Recipe-container'>
 				<div className='Recipe-image'>
-					<Card className={classes.root} variant='outlined'>
+					<Card
+						className={classes.root}
+						variant='outlined'
+						onClick={() => window.open(url)}
+					>
 						<div className={classes.details}>
 							<CardContent className={classes.content}>
 								<Typography component='h5' variant='h5'>
@@ -100,18 +104,29 @@ const Recipe = () => {
 								>
 									{decodedDescription}
 								</Typography>
+								<Typography>
+									Click to view recipe on website...
+								</Typography>
 							</CardContent>
 						</div>
 						<CardMedia
 							className={classes.media}
 							component='img'
-							src={recipe.image[0]}
+							src={recipe.image[0] || noImg}
 							title={decodedTitle}
 							alt={decodedDescription}
 						/>
 					</Card>
 				</div>
-				<p>{url}</p>
+			{author && (<Card onClick={()=> window.open(author?.url || url)}>
+					<CardContent>
+						<Typography>Recipe by: {author?.name}</Typography>
+						<Typography>{author?.description}</Typography>
+						<Typography>{author?.url || url}</Typography>
+						
+					</CardContent>
+				</Card>)}
+				
 				<div className='Recipe-ingredients'>{renderIngredients(recipe)}</div>
 				<div className='Recipe-instructions'>{renderInstructions(recipe)}</div>
 			</div>

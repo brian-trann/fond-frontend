@@ -21,6 +21,7 @@ const GenericList = ({
 	paginateHandler,
 	searchRecipeDb,
 	searchRecipeStore,
+	searchWords,
 	userRecipes = false
 }) => {
 	const classes = useStyles();
@@ -28,30 +29,6 @@ const GenericList = ({
 	const recipesState = useSelector((st) => st.recipes);
 	const addedRecipeIds = Object.keys(recipesState);
 
-	const renderRecipeCards = Object.values(recipes).map((r) => {
-		const isInState = addedRecipeIds.includes(r.id.toString());
-		return (
-			<RecipeCard
-				handleClick={() => history.push(`/recipes/${r.id}`)}
-				key={r.id}
-				className={classes.recipeCard}
-				recipeObj={r}
-				userRecipes={isInState}
-			/>
-		);
-	});
-	const renderPaginationButton = () => {
-		return (
-			<div className={classes.paginateButton}>
-				<MyButton
-					text='More Recipes'
-					onClick={paginateHandler}
-					size='large'
-					variant='outlined'
-				/>
-			</div>
-		);
-	};
 	const handleSearch = (searchWords) => {
 		if (userRecipes) {
 			searchRecipeStore(searchWords);
@@ -62,21 +39,36 @@ const GenericList = ({
 
 	return (
 		<React.Fragment>
-			<div className='card-container'>
-				<div>
-					<SearchForm userRecipes={userRecipes} handleSearch={handleSearch} />
-				</div>
-				<Grid
-					direction='row'
-					container
-					spacing={2}
-					justify='space-around'
-					alignItems='stretch'
-				>
-					{renderRecipeCards}
-				</Grid>
+			<div>
+				<SearchForm userRecipes={userRecipes} handleSearch={handleSearch} />
 			</div>
-			{!userRecipes && !isEmpty(recipes) && renderPaginationButton()}
+			<Grid direction='row' container spacing={2} justify='space-around' alignItems='stretch'>
+				{Object.values(recipes).map((r) => {
+					const isInState = addedRecipeIds.includes(r.id.toString());
+					return (
+						<RecipeCard
+							handleClick={() => history.push(`/recipes/${r.id}`)}
+							key={r.id}
+							className={classes.recipeCard}
+							recipeObj={r}
+							userRecipes={isInState}
+							searchWords={searchWords}
+						/>
+					);
+				})}
+			</Grid>
+
+			{!userRecipes &&
+			!isEmpty(recipes) && (
+				<div className={classes.paginateButton}>
+					<MyButton
+						text='More Recipes'
+						onClick={paginateHandler}
+						size='large'
+						variant='outlined'
+					/>
+				</div>
+			)}
 		</React.Fragment>
 	);
 };

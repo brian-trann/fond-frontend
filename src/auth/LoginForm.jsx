@@ -6,7 +6,7 @@ import { getUserLoginToken } from '../actions/user';
 import MyTextField from '../common/MyTextField';
 import { Button, Typography } from '@material-ui/core';
 import * as yup from 'yup';
-import './LoginForm.css';
+
 const validationSchema = yup.object({
 	email    : yup.string().email().required(),
 	password : yup.string().required()
@@ -36,7 +36,7 @@ const LoginForm = () => {
 					});
 			}}
 		>
-			{({ values, errors, handleSubmit }) => (
+			{() => (
 				<div className='LoginForm-container'>
 					<Typography variant='h4' gutterBottom>
 						Log In
@@ -62,8 +62,6 @@ const LoginForm = () => {
 						<div>
 							<Button type='submit'>Log in</Button>
 						</div>
-						<pre>{JSON.stringify(values, null, 2)}</pre>
-						<pre>{JSON.stringify(errors, null, 2)}</pre>
 					</Form>
 				</div>
 			)}

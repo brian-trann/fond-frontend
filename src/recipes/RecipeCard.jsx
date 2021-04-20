@@ -1,18 +1,22 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
+import jwt_decode from 'jwt-decode';
+import { decode } from 'html-entities';
+import { postUserRecipeLike, postUserRecipeUnlike } from '../actions/recipes';
+import { useHistory } from 'react-router-dom';
+
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { decode } from 'html-entities';
 import MyButton from '../common/MyButton';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import jwt_decode from 'jwt-decode';
-import { postUserRecipeLike, postUserRecipeUnlike } from '../actions/recipes';
 import noImg from '../assets/no-img.jpg';
+import Highlighter from 'react-highlight-words';
+
 const useStyles = makeStyles({
 	root            : {
 		maxWidth      : 285,
@@ -31,20 +35,18 @@ const useStyles = makeStyles({
 	}
 });
 
-const RecipeCard = ({ handleClick, recipeObj, userRecipes }) => {
+const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) => {
 	const classes = useStyles();
 	const token = useSelector((st) => st.user.token);
 	const dispatch = useDispatch();
-
+	const history = useHistory();
 	const { recipe, title, id } = recipeObj;
 
 	const handleChildClick = () => {
 		handleClick(id);
 	};
-	const handleLikeDislike = (isUserRecipes) => {
-		console.log('add|remove');
-		console.log('param: ', isUserRecipes);
 
+	const handleLikeDislike = (isUserRecipes) => {
 		if (token) {
 			const decoded = jwt_decode(token);
 			if (!isUserRecipes) {
@@ -59,15 +61,21 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes }) => {
 				});
 			}
 		} else {
-			console.log('no token -- Redirect to making an account ');
+			history.push('/signup');
 		}
 	};
 	const decodedTitle = decode(title);
+
 	const decodedDescription = decode(recipe.description);
+
 	const formattedTitle =
 		decodedTitle.length < 40 ? decodedTitle : decodedTitle.slice(0, 40) + '...';
+
 	const formattedDescription = decodedDescription.slice(0, 120) + '...';
+
 	const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
+	const searchWordsArr = searchWords.split(' ');
+
 	return (
 		<Grid item>
 			<Card className={classes.root}>
@@ -79,7 +87,11 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes }) => {
 					/>
 					<CardContent>
 						<Typography gutterBottom variant='h5' component='h2'>
-							{formattedTitle}
+							<Highlighter
+								searchWords={searchWordsArr}
+								autoEscape={true}
+								textToHighlight={formattedTitle}
+							/>
 						</Typography>
 						<Typography
 							className={classes.cardDescription}
@@ -87,7 +99,11 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes }) => {
 							color='textSecondary'
 							component='p'
 						>
-							{formattedDescription}
+							<Highlighter
+								searchWords={searchWordsArr}
+								autoEscape={true}
+								textToHighlight={formattedDescription}
+							/>
 						</Typography>
 					</CardContent>
 				</CardActionArea>

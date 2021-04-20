@@ -6,7 +6,7 @@ import { getUserSignupToken } from '../actions/user';
 import { Button, Typography } from '@material-ui/core';
 import MyTextField from '../common/MyTextField';
 import * as yup from 'yup';
-import './SignupForm.css';
+
 const validationSchema = yup.object({
 	email    : yup.string().email(),
 	password : yup.string().required().min(5),
@@ -22,7 +22,6 @@ const SignupForm = () => {
 			validationSchema={validationSchema}
 			onSubmit={(data, { setSubmitting, resetForm }) => {
 				setSubmitting(true);
-				// make async call
 
 				dispatch(getUserSignupToken(data))
 					.then(() => {
@@ -38,8 +37,8 @@ const SignupForm = () => {
 					});
 			}}
 		>
-			{({ values, errors, handleSubmit }) => (
-				<div className='SignupForm-container'>
+			{() => (
+				<React.Fragment>
 					<Typography variant='h4' gutterBottom>
 						Sign up
 					</Typography>
@@ -72,10 +71,8 @@ const SignupForm = () => {
 						<div>
 							<Button type='submit'>Sign Up</Button>
 						</div>
-						{/* <pre>{JSON.stringify(values, null, 2)}</pre>
-						<pre>{JSON.stringify(errors, null, 2)}</pre> */}
 					</Form>
-				</div>
+				</React.Fragment>
 			)}
 		</Formik>
 	);

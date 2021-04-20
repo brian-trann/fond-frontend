@@ -21,6 +21,7 @@ const MyRecipeList = () => {
 	const token = useSelector((st) => st.user.token);
 	const [ searching, setSearching ] = useState(false);
 	const [ filteredRecipes, setFilteredRecipes ] = useState({});
+	const [ searchWords, setSearchWords ] = useState('');
 	// If no token || users
 	// redirect
 	const decoded = jwt_decode(token);
@@ -43,6 +44,8 @@ const MyRecipeList = () => {
 	};
 	const searchRecipeStore = (words) => {
 		setSearching(true);
+		// setSearchWords(words.split(' '));
+		setSearchWords(words);
 		const filtered = filterRecipes(recipes, words);
 		setFilteredRecipes(filtered);
 	};
@@ -70,12 +73,14 @@ const MyRecipeList = () => {
 					userRecipes={true}
 					recipes={recipes}
 					searchRecipeStore={searchRecipeStore}
+					searchWords={searchWords}
 				/>
 			) : (
 				<GenericList
 					userRecipes={true}
 					recipes={filteredRecipes}
 					searchRecipeStore={searchRecipeStore}
+					searchWords={searchWords}
 				/>
 			)}
 		</React.Fragment>

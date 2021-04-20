@@ -19,9 +19,7 @@ const RecipeList = () => {
 		const filteredWords = filterSpecialChars(words);
 		const trimmedWords = filteredWords.trim();
 		setSkip(0);
-		console.log('reset skip and recipes');
 		setRecipes({});
-
 		setSearch(trimmedWords);
 	};
 
@@ -54,6 +52,7 @@ const RecipeList = () => {
 				recipes={recipes}
 				paginateHandler={nextRecipeBatch}
 				searchRecipeDb={searchRecipeDb}
+				searchWords={search}
 			/>
 		</React.Fragment>
 	);

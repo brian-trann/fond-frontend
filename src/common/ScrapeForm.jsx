@@ -4,13 +4,26 @@ import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
 import FondApi from '../api';
 import { useHistory } from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
 import * as yup from 'yup';
+const useStyles = makeStyles(() => ({
+	scrapeForm : {
+		textAlign    : 'center',
+		marginTop    : '2rem',
+		marginBottom : '2rem'
+	},
+	button     : {
+		marginLeft  : '1rem',
+		marginRight : '1rem'
+	}
+}));
 
 const validationSchema = yup.object({
 	url : yup.string().required().url()
 });
 const ScrapeForm = () => {
 	const history = useHistory();
+	const classes = useStyles();
 	return (
 		<Formik
 			initialValues={{ url: '' }}
@@ -31,10 +44,12 @@ const ScrapeForm = () => {
 			}}
 		>
 			{({ values, errors, handleSubmit }) => (
-				<Form className='ScrapeForm-container'>
+				<Form className={classes.scrapeForm}>
 					<div>
 						<MyTextField label='Scrape Url' name='url' placeholder='url' type='input' />
-						<Button type='submit'>Submit</Button>
+						<Button className={classes.button} type='submit'>
+							Submit
+						</Button>
 					</div>
 					{/* <pre>{JSON.stringify(values, null, 2)}</pre>
 					<pre>{JSON.stringify(errors, null, 2)}</pre> */}

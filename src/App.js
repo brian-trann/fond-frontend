@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import NavBar from './routes-nav/NavBar';
 import Routes from './routes-nav/Routes';
 import Container from '@material-ui/core/Container';
+import Footer from './common/Footer';
 function App() {
 	return (
 		<BrowserRouter>
@@ -10,6 +11,7 @@ function App() {
 			<Container maxWidth='md'>
 				<Routes />
 			</Container>
+			<Footer />
 		</BrowserRouter>
 	);
 }

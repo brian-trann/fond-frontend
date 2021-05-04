@@ -3,6 +3,7 @@ import { Formik, Form } from 'formik';
 import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 const useStyles = makeStyles(() => ({
 	searchForm : {
 		textAlign    : 'center',
@@ -15,9 +16,7 @@ const useStyles = makeStyles(() => ({
 	}
 }));
 
-const SearchForm = ({ userRecipes, handleSearch }) => {
-	// console.log(userRecipes); => BOOL if searching in in userRecipes or db
-	// unsure if i need this
+const SearchForm = ({ handleSearch }) => {
 	const classes = useStyles();
 
 	return (
@@ -34,22 +33,24 @@ const SearchForm = ({ userRecipes, handleSearch }) => {
 		>
 			{({ handleReset }) => (
 				<React.Fragment>
-					<Form className={classes.searchForm}>
-						<div>
-							<MyTextField
-								label='Search'
-								name='search'
-								placeholder='search'
-								type='input'
-							/>
-							<Button className={classes.button} onClick={() => handleReset()}>
-								Cancel
-							</Button>
-							<Button className={classes.button} type='submit'>
-								Search
-							</Button>
-						</div>
-					</Form>
+					<Container maxWidth='sm'>
+						<Form className={classes.searchForm}>
+							<div>
+								<MyTextField
+									label='Search'
+									name='search'
+									placeholder='search'
+									type='input'
+								/>
+								<Button className={classes.button} onClick={() => handleReset()}>
+									Cancel
+								</Button>
+								<Button className={classes.button} type='submit'>
+									Search
+								</Button>
+							</div>
+						</Form>
+					</Container>
 				</React.Fragment>
 			)}
 		</Formik>

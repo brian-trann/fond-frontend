@@ -6,7 +6,21 @@ import { getUserLoginToken } from '../actions/user';
 import MyTextField from '../common/MyTextField';
 import { Button, Typography } from '@material-ui/core';
 import * as yup from 'yup';
-
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+const useStyles = makeStyles((theme) => ({
+	root        : {
+		display       : 'flex',
+		flexDirection : 'column',
+		minHeight     : '70vh'
+	},
+	heroContent : {
+		padding : theme.spacing(8, 0, 6)
+	},
+	formField   : {
+		margin : theme.spacing(3, 0, 1)
+	}
+}));
 const validationSchema = yup.object({
 	email    : yup.string().email().required(),
 	password : yup.string().required()
@@ -15,6 +29,7 @@ const validationSchema = yup.object({
 const LoginForm = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const classes = useStyles();
 	return (
 		<Formik
 			initialValues={{ email: '', password: '' }}
@@ -37,33 +52,35 @@ const LoginForm = () => {
 			}}
 		>
 			{() => (
-				<div className='LoginForm-container'>
-					<Typography variant='h4' gutterBottom>
-						Log In
-					</Typography>
-					<Form>
-						<div>
-							<MyTextField
-								label='Email'
-								name='email'
-								placeholder='email'
-								type='input'
-							/>
-						</div>
-						<div>
-							<MyTextField
-								label='Password'
-								name='password'
-								type='password'
-								placeholder='password'
-							/>
-						</div>
+				<Container className={classes.root} maxWidth='sm'>
+					<div className={classes.heroContent}>
+						<Typography variant='h2' component='h1' color='textSecondary' gutterBottom>
+							Log In
+						</Typography>
+						<Form>
+							<div className={classes.formField}>
+								<MyTextField
+									label='Email'
+									name='email'
+									placeholder='email'
+									type='input'
+								/>
+							</div>
+							<div className={classes.formField}>
+								<MyTextField
+									label='Password'
+									name='password'
+									type='password'
+									placeholder='password'
+								/>
+							</div>
 
-						<div>
-							<Button type='submit'>Log in</Button>
-						</div>
-					</Form>
-				</div>
+							<div>
+								<Button type='submit'>Log in</Button>
+							</div>
+						</Form>
+					</div>
+				</Container>
 			)}
 		</Formik>
 	);

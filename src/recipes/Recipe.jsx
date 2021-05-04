@@ -13,11 +13,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import FondApi from '../api';
 import noImg from '../assets/no-img.jpg';
-import IconButton from '@material-ui/core/IconButton';
-import markDownSvg from '../assets/md.svg';
-import txtSvg from '../assets/txt.svg';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { isEmpty, generateFormattedStringFromRecipe } from '../helpers/helpers';
+import MySnackBar from '../common/MySnackBar';
+import MyClipboard from '../common/MyClipboard';
 const useStyles = makeStyles(() => ({
 	root         : {
 		display      : 'flex',
@@ -58,12 +56,23 @@ const useStyles = makeStyles(() => ({
 const Recipe = () => {
 	const { id } = useParams();
 	const classes = useStyles();
-
 	const recipesInStore = useSelector((st) => st.recipes);
 	const token = useSelector((st) => st.user.token);
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const [ recipeObj, setRecipeObj ] = useState({});
+	const [ open, setOpen ] = useState(false);
+
+	const handleSnackOpen = () => {
+		setOpen(true);
+	};
+
+	const handleSnackClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 
 	const handleLikeDislike = (isUserRecipes) => {
 		if (token) {
@@ -92,13 +101,11 @@ const Recipe = () => {
 				const recipe = JSON.parse(raw_recipe);
 				const formattedRecipe = { id, url, keywords, title, recipe };
 				setRecipeObj(formattedRecipe);
-				
 			};
 
 			if (recipesInStore[id]) {
 				//set md?
 				setRecipeObj(() => ({ ...recipesInStore[id] }));
-				
 			} else {
 				fetchRecipe(id);
 			}
@@ -113,7 +120,7 @@ const Recipe = () => {
 		const { title, recipe, url } = recipeObj;
 		const decodedTitle = decode(title);
 		const decodedDescription = decode(recipe.description);
-
+		
 		const author = Array.isArray(recipe?.author) ? recipe.author[0] : recipe.author;
 
 		return (
@@ -161,34 +168,21 @@ const Recipe = () => {
 				>
 					{isAdded(recipesInStore, id) ? 'Remove' : 'Add'}
 				</Button>
+				{/* EndButton*/}
+				{/* Clipboard */}
 				{!isEmpty(recipeObj) && (
 					<React.Fragment>
-						<CopyToClipboard
-							text={generateFormattedStringFromRecipe(recipeObj.recipe).markdown}
-						>
-							<IconButton
-								color='primary'
-								aria-label='upload picture'
-								component='span'
-							>
-								<img src={markDownSvg} alt='Markdown logo' />
-							</IconButton>
-						</CopyToClipboard>
-						<CopyToClipboard
-							text={generateFormattedStringFromRecipe(recipeObj.recipe).text}
-						>
-							<IconButton
-								color='primary'
-								aria-label='upload picture'
-								component='span'
-							>
-								<img src={txtSvg} alt='text logo' />
-							</IconButton>
-						</CopyToClipboard>
+						Copy to clipboard
+						<MyClipboard
+							handleSnackOpen={handleSnackOpen}
+							markDownString={
+								generateFormattedStringFromRecipe(recipeObj.recipe).markdown
+							}
+							textString={generateFormattedStringFromRecipe(recipeObj.recipe).text}
+						/>
 					</React.Fragment>
 				)}
-
-				{/* EndButton*/}
+				{/* End Clipboard */}
 
 				{/* Recipe Ingredients */}
 				<Typography component='h5' variant='h5'>
@@ -239,13 +233,20 @@ const Recipe = () => {
 					</CardContent>
 				</Card>)}
 				{/* End Author */}
+				{/* Snackbar */}
+				<MySnackBar
+					text='Copied to clipboard'
+					open={open}
+					handleSnackClose={handleSnackClose}
+				/>
+				{/* End Snackbar */}
 			</div>
 		);
 	};
 
 	return (
 		<React.Fragment>
-			{Object.keys(recipeObj).length > 0 ? renderRecipe(recipeObj) : <p>Loading</p>}
+			{isEmpty(recipeObj)  ?  <p>Loading</p> : renderRecipe(recipeObj) }
 		</React.Fragment>
 	);
 };

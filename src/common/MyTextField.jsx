@@ -12,6 +12,7 @@ const MyTextField = ({ placeholder, type, ...props }) => {
 			error={!!errorText}
 			size='small'
 			variant='outlined'
+			fullWidth
 		/>
 	);
 };

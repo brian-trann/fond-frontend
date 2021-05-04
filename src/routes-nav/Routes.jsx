@@ -7,7 +7,7 @@ import Recipe from '../recipes/Recipe';
 import SignupForm from '../auth/SignupForm';
 import LoginForm from '../auth/LoginForm';
 import ScrapeForm from '../common/ScrapeForm';
-// import SearchForm from '../common/SearchForm';
+
 const Routes = () => {
 	return (
 		<Switch>

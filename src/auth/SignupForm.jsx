@@ -6,16 +6,30 @@ import { getUserSignupToken } from '../actions/user';
 import { Button, Typography } from '@material-ui/core';
 import MyTextField from '../common/MyTextField';
 import * as yup from 'yup';
-
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 const validationSchema = yup.object({
 	email    : yup.string().email(),
 	password : yup.string().required().min(5),
 	username : yup.string().required()
 });
-
+const useStyles = makeStyles((theme) => ({
+	root        : {
+		display       : 'flex',
+		flexDirection : 'column',
+		minHeight     : '70vh'
+	},
+	heroContent : {
+		padding : theme.spacing(8, 0, 6)
+	},
+	formField   : {
+		margin : theme.spacing(3, 0, 1)
+	}
+}));
 const SignupForm = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const classes = useStyles();
 	return (
 		<Formik
 			initialValues={{ email: '', password: '', username: '' }}
@@ -38,41 +52,43 @@ const SignupForm = () => {
 			}}
 		>
 			{() => (
-				<React.Fragment>
-					<Typography variant='h4' gutterBottom>
-						Sign up
-					</Typography>
-					<Form>
-						<div>
-							<MyTextField
-								label='Email'
-								name='email'
-								placeholder='email'
-								type='input'
-							/>
-						</div>
-						<div>
-							<MyTextField
-								label='Password'
-								name='password'
-								type='password'
-								placeholder='password'
-							/>
-						</div>
-						<div>
-							<MyTextField
-								label='Username'
-								name='username'
-								placeholder='username'
-								type='input'
-							/>
-						</div>
+				<Container className={classes.root} maxWidth='sm'>
+					<div className={classes.heroContent}>
+						<Typography variant='h2' component='h1' color='textSecondary' gutterBottom>
+							Sign up
+						</Typography>
+						<Form>
+							<div className={classes.formField}>
+								<MyTextField
+									label='Email'
+									name='email'
+									placeholder='email'
+									type='input'
+								/>
+							</div>
+							<div className={classes.formField}>
+								<MyTextField
+									label='Password'
+									name='password'
+									type='password'
+									placeholder='password'
+								/>
+							</div>
+							<div className={classes.formField}>
+								<MyTextField
+									label='Username'
+									name='username'
+									placeholder='username'
+									type='input'
+								/>
+							</div>
 
-						<div>
-							<Button type='submit'>Sign Up</Button>
-						</div>
-					</Form>
-				</React.Fragment>
+							<div>
+								<Button type='submit'>Sign Up</Button>
+							</div>
+						</Form>
+					</div>
+				</Container>
 			)}
 		</Formik>
 	);

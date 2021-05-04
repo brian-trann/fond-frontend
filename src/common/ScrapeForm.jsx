@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form } from 'formik';
 import MyTextField from '../common/MyTextField';
 import { Button } from '@material-ui/core';
@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import * as yup from 'yup';
 import Container from '@material-ui/core/Container';
+import MySnackBar from './MySnackBar';
 const useStyles = makeStyles((theme) => ({
 	root        : {
 		display       : 'flex',
@@ -44,6 +45,13 @@ const scrapeFormContent = {
 const ScrapeForm = () => {
 	const history = useHistory();
 	const classes = useStyles();
+	const [ open, setOpen ] = useState(false);
+	const handleSnackClose = (event, reason) => {
+		if (reason === 'clickaway') {
+			return;
+		}
+		setOpen(false);
+	};
 	return (
 		<Formik
 			initialValues={{ url: '' }}
@@ -57,7 +65,7 @@ const ScrapeForm = () => {
 				} catch (error) {
 					resetForm();
 					console.error('Something went wrong!', error);
-					console.log('display failed scrape component or maybe a snackbar');
+					setOpen(true);
 				} finally {
 					setSubmitting(false);
 				}
@@ -96,6 +104,12 @@ const ScrapeForm = () => {
 								</Link>
 							</Typography>
 						</Container>
+						<MySnackBar
+							text='Failed! The developer has been notified'
+							open={open}
+							handleSnackClose={handleSnackClose}
+							severity='error'
+						/>
 					</div>
 				</React.Fragment>
 			)}

@@ -29,7 +29,7 @@ const NavBar = () => {
 		return (
 			<React.Fragment>
 				<MyNavButton to='/myrecipes' text='My Recipes' />
-				<MyNavButton to='/account' text='Account' />
+				{/* <MyNavButton to='/account' text='Account' /> */}
 				<MyNavButton to='/' text='Log Out' handleClick={handleLogOut} />
 			</React.Fragment>
 		);

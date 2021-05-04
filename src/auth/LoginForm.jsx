@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 		flexDirection : 'column',
 		minHeight     : '70vh'
 	},
-	heroContent : {
+	formContent : {
 		padding : theme.spacing(8, 0, 6)
 	},
 	formField   : {
@@ -53,7 +53,7 @@ const LoginForm = () => {
 		>
 			{() => (
 				<Container className={classes.root} maxWidth='sm'>
-					<div className={classes.heroContent}>
+					<div className={classes.formContent}>
 						<Typography variant='h2' component='h1' color='textSecondary' gutterBottom>
 							Log In
 						</Typography>
@@ -62,7 +62,7 @@ const LoginForm = () => {
 								<MyTextField
 									label='Email'
 									name='email'
-									placeholder='email'
+									placeholder='Email'
 									type='input'
 								/>
 							</div>
@@ -71,7 +71,7 @@ const LoginForm = () => {
 									label='Password'
 									name='password'
 									type='password'
-									placeholder='password'
+									placeholder='Password'
 								/>
 							</div>
 

@@ -16,6 +16,9 @@ import noImg from '../assets/no-img.jpg';
 import { isEmpty, generateFormattedStringFromRecipe } from '../helpers/helpers';
 import MySnackBar from '../common/MySnackBar';
 import MyClipboard from '../common/MyClipboard';
+/**
+ * Recipe Component renders the recipe ingredients, instructions, and author
+ */
 const useStyles = makeStyles(() => ({
 	root         : {
 		display      : 'flex',

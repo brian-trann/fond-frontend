@@ -5,7 +5,6 @@ import jwt_decode from 'jwt-decode';
 import { decode } from 'html-entities';
 import { postUserRecipeLike, postUserRecipeUnlike } from '../actions/recipes';
 import { useHistory } from 'react-router-dom';
-
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -41,6 +40,13 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) =
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const { recipe, title, id } = recipeObj;
+	const decodedTitle = decode(title);
+	const decodedDescription = decode(recipe.description);
+	const formattedTitle =
+		decodedTitle.length < 40 ? decodedTitle : decodedTitle.slice(0, 40) + '...';
+	const formattedDescription = decodedDescription.slice(0, 120) + '...';
+	const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
+	const searchWordsArr = searchWords.split(' ');
 
 	const handleChildClick = () => {
 		handleClick(id);
@@ -64,17 +70,6 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) =
 			history.push('/signup');
 		}
 	};
-	const decodedTitle = decode(title);
-
-	const decodedDescription = decode(recipe.description);
-
-	const formattedTitle =
-		decodedTitle.length < 40 ? decodedTitle : decodedTitle.slice(0, 40) + '...';
-
-	const formattedDescription = decodedDescription.slice(0, 120) + '...';
-
-	const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
-	const searchWordsArr = searchWords.split(' ');
 
 	return (
 		<Grid item>

@@ -1,6 +1,9 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+/**
+ * MySnackBar component is a wrapper component that helps abstract the Snack/Alert functionality 
+ */
 
 const Alert = (props) => {
 	return <MuiAlert elevation={6} variant='filled' {...props} />;

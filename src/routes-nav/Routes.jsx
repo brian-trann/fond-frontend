@@ -7,6 +7,7 @@ import Recipe from '../recipes/Recipe';
 import SignupForm from '../auth/SignupForm';
 import LoginForm from '../auth/LoginForm';
 import ScrapeForm from '../common/ScrapeForm';
+import PrivateRoute from './PrivateRoute';
 
 const Routes = () => {
 	return (
@@ -26,9 +27,9 @@ const Routes = () => {
 			<Route exact path='/recipes/:id'>
 				<Recipe />
 			</Route>
-			<Route exact path='/myrecipes'>
+			<PrivateRoute exact path='/myrecipes'>
 				<MyRecipeList />
-			</Route>
+			</PrivateRoute>
 			<Route exact path='/scrape'>
 				<ScrapeForm />
 			</Route>

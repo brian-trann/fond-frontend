@@ -49,7 +49,7 @@ const userTypes = [
 const homepageContent = {
 	title          : 'Fond',
 	description    :
-		"Fond is a full stack recipe web app and web scraper built using NodeJS, React, PostgreSQL, and Express. It's goal is to make it easier to see recipe instructions and ingredients and to share recipes with oneself.",
+		"Fond is a full stack recipe web app and web scraper built using NodeJS, React, PostgreSQL, and Express. It's goal is to make it easier to see recipe instructions and ingredients and to share recipes with oneself. This project is still in development.",
 	additionalInfo : 'Also, browse over 9000 recipes'
 };
 

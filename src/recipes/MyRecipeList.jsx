@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import jwt_decode from 'jwt-decode';
-
 import GenericList from './GenericList';
 import { isEmpty } from '../helpers/helpers';
 import { getUserRecipes } from '../actions/recipes';
+/**
+ * MyRecipeList is a component that renders the GenericList component
+ * based on what recipes are in the redux store. If the store has not 
+ * been populated, this component will get fresh user recipes from the
+ * database.
+ */
 
 const useStyles = makeStyles(() => ({
 	emptyRecipes : {
@@ -22,16 +27,13 @@ const MyRecipeList = () => {
 	const [ searching, setSearching ] = useState(false);
 	const [ filteredRecipes, setFilteredRecipes ] = useState({});
 	const [ searchWords, setSearchWords ] = useState('');
-	// If no token || users
-	// redirect
+
 	const decoded = jwt_decode(token);
 
 	const username = decoded.user;
 	const filterRecipes = (recipes, words) => {
 		const lowerWords = words.toLowerCase();
 		const filteredIds = Object.values(recipes).reduce((acc, curr) => {
-			// instead of returning entire object, i can return a list of IDs
-			// i will be able to keep less things in state
 			const { title, id } = curr;
 			const lowerTitle = title.toLowerCase();
 			if (lowerTitle.includes(lowerWords)) {
@@ -44,9 +46,9 @@ const MyRecipeList = () => {
 	};
 	const searchRecipeStore = (words) => {
 		setSearching(true);
-		// setSearchWords(words.split(' '));
 		setSearchWords(words);
 		const filtered = filterRecipes(recipes, words);
+		console.log(words);
 		setFilteredRecipes(filtered);
 	};
 

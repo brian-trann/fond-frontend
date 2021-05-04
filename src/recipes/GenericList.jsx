@@ -7,6 +7,12 @@ import MyButton from '../common/MyButton';
 import { isEmpty } from '../helpers/helpers';
 import { useSelector } from 'react-redux';
 import SearchForm from '../common/SearchForm';
+/**
+ * GenericList is a component that will render recipes based on it's parent component
+ *  - RecipeList (from database)
+ *  - MyRecipeList (from redux store)
+ */
+
 const useStyles = makeStyles((theme) => ({
 	paginateButton : {
 		padding       : theme.spacing(2),

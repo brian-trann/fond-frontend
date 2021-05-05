@@ -12,28 +12,28 @@ const MyClipboard = ({ handleSnackOpen, markDownString, textString }) => {
 	return (
 		<React.Fragment>
 			<CopyToClipboard text={markDownString}>
-				<Tooltip title='Copy markdown text'>
-					<IconButton
-						color='primary'
-						onClick={handleSnackOpen}
-						aria-label='Copy markdown text'
-						component='span'
-					>
+				<IconButton
+					color='primary'
+					onClick={handleSnackOpen}
+					aria-label='Copy markdown text'
+					component='span'
+				>
+					<Tooltip title='Copy markdown text'>
 						<img src={markDownSvg} alt='Markdown logo' />
-					</IconButton>
-				</Tooltip>
+					</Tooltip>
+				</IconButton>
 			</CopyToClipboard>
 			<CopyToClipboard text={textString}>
-				<Tooltip title='Copy plaintext'>
-					<IconButton
-						color='primary'
-						aria-label='Copy plaintext'
-						onClick={handleSnackOpen}
-						component='span'
-					>
+				<IconButton
+					color='primary'
+					aria-label='Copy plaintext'
+					onClick={handleSnackOpen}
+					component='span'
+				>
+					<Tooltip title='Copy plaintext'>
 						<img src={txtSvg} alt='text logo' />
-					</IconButton>
-				</Tooltip>
+					</Tooltip>
+				</IconButton>
 			</CopyToClipboard>
 		</React.Fragment>
 	);

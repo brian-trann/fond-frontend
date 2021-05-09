@@ -73,8 +73,13 @@ const generateFormattedStringFromRecipe = (recipeObj) => {
 		});
 	};
 	const addImg = ({ name, image }) => {
-		if (image.length > 0) {
-			response.markdown += `\n![${name}](${image[0]} "${name}") \n`;
+		if (Array.isArray(image)) {
+			if (image.length > 0) {
+				response.markdown += `\n![${name}](${image[0]} "${name}") \n`;
+			}
+		}
+		if (!Array.isArray(image) && image instanceof Object) {
+			response.markdown += `\n![${name}](${image.url} "${name}") \n`;
 		}
 	};
 	makeRecipeHeader(recipeObj);

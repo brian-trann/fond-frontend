@@ -57,6 +57,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Recipe = () => {
+	// check if image is array or string
 	const { id } = useParams();
 	const classes = useStyles();
 	const recipesInStore = useSelector((st) => st.recipes);
@@ -125,7 +126,24 @@ const Recipe = () => {
 		const decodedDescription = decode(recipe.description);
 		
 		const author = Array.isArray(recipe?.author) ? recipe.author[0] : recipe.author;
-
+		let img
+		if(Array.isArray(recipe.image)){
+			if(typeof recipe.image[0] === 'string'){
+				img = recipe.image[0]
+			}
+			if(typeof recipe.image[0] === 'object' && recipe.image[0]['@type'] === 'ImageObject'){
+				img = recipe.image[0].url
+			}
+			console.log(img)
+		}
+		if(recipe.image instanceof String || typeof recipe.image ==='string'){
+			img = recipe.image
+		}
+		if(recipe.image instanceof Object && !Array.isArray(recipe.image)){
+			img = recipe.image.url
+			
+		}
+		
 		return (
 			<div className={classes.container}>
 				<div className='Recipe-image'>
@@ -156,7 +174,7 @@ const Recipe = () => {
 						<CardMedia
 							className={classes.media}
 							component='img'
-							src={recipe.image[0] || noImg}
+							src={img ||  noImg}
 							title={decodedTitle}
 							alt={decodedDescription}
 						/>

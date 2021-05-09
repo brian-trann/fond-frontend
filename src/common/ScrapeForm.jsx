@@ -35,12 +35,23 @@ const validationSchema = yup.object({
 });
 
 const scrapeFormContent = {
-	title       : 'Scrape the fond',
-	description : 'Please provide a URL to a recipe',
-	url         : {
+	title          : 'Scrape the fond',
+	description    : 'Please provide a URL to a recipe',
+	example        : {
+		goodExample : {
+			text : 'Like this',
+			url  : 'https://www.allrecipes.com/recipe/258362'
+		},
+		badExample  : {
+			text : 'Not this',
+			url  : 'https://www.allrecipes.com/'
+		}
+	},
+	url            : {
 		text : 'My web scraping approach and developer usage: GitHub',
 		link : 'https://github.com/brian-trann/fond'
-	}
+	},
+	placeholderUrl : 'https://www.allrecipes.com/recipe/258362'
 };
 const ScrapeForm = () => {
 	const history = useHistory();
@@ -86,7 +97,7 @@ const ScrapeForm = () => {
 									<MyTextField
 										label='Scrape Url'
 										name='url'
-										placeholder='url'
+										placeholder={scrapeFormContent.placeholderUrl}
 										type='input'
 									/>
 									<Button className={classes.button} type='submit'>

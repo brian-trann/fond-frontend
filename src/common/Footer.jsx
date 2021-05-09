@@ -5,12 +5,10 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
-	'@global'    : {
-		ul : {
-			margin    : 0,
-			padding   : 0,
-			listStyle : 'none'
-		}
+	footerUl     : {
+		margin    : 0,
+		padding   : 0,
+		listStyle : 'none'
 	},
 	footer       : {
 		borderTop                    : `1px solid ${theme.palette.divider}`,
@@ -53,7 +51,7 @@ const Footer = () => {
 							<Typography variant='h6' color='textPrimary' gutterBottom>
 								{title}
 							</Typography>
-							<ul>
+							<ul className={classes.footerUl}>
 								{description.map(({ text, url }) => (
 									<li key={text}>
 										<Link

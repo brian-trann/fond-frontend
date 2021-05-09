@@ -45,7 +45,10 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) =
 	const formattedTitle =
 		decodedTitle.length < 40 ? decodedTitle : decodedTitle.slice(0, 40) + '...';
 	const formattedDescription = decodedDescription.slice(0, 120) + '...';
-	const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
+	// Check if ARRAY OR STRING
+	const avgImgQualityIdx = Array.isArray(recipe.image) ? ~~((recipe.image.length - 1) / 2) : null;
+
+	const imgStr = recipe.image instanceof String ? recipe.image : null;
 	const searchWordsArr = searchWords.split(' ');
 
 	const handleChildClick = () => {
@@ -77,7 +80,7 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) =
 				<CardActionArea className={classes.cardBody} onClick={handleChildClick}>
 					<CardMedia
 						className={classes.media}
-						image={recipe.image[avgImgQualityIdx] || noImg}
+						image={recipe.image[avgImgQualityIdx] || imgStr || noImg}
 						title={decodedTitle}
 					/>
 					<CardContent>

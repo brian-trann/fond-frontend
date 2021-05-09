@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
 	cardHeader  : {
 		backgroundColor :
 			theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700]
+	},
+	cardUl      : {
+		margin    : 0,
+		padding   : 0,
+		listStyle : 'none'
 	}
 }));
 
@@ -96,7 +101,7 @@ const HomePage = () => {
 											className={classes.cardHeader}
 										/>
 										<CardContent>
-											<ul>
+											<ul className={classes.cardUl}>
 												{description.map((line) => (
 													<Typography
 														component='li'

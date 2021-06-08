@@ -42,9 +42,9 @@ const GenericList = ({
 			searchRecipeDb(searchWords);
 		}
 	};
-	console.log('~~~~~~~~');
-	console.log(recipes);
-	console.log('~~~~~~~~');
+	// console.log('~~~~~~~~');
+	// console.log(recipes);
+	// console.log('~~~~~~~~');
 	return (
 		<React.Fragment>
 			<div>

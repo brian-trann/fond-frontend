@@ -24,7 +24,8 @@ const useStyles = makeStyles({
 		flexDirection : 'column'
 	},
 	media           : {
-		height : 140
+		height : 140,
+		width  : 285
 	},
 	cardBody        : {
 		marginBottom : 'auto'
@@ -45,11 +46,28 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) =
 	const formattedTitle =
 		decodedTitle.length < 40 ? decodedTitle : decodedTitle.slice(0, 40) + '...';
 	const formattedDescription = decodedDescription.slice(0, 120) + '...';
-	// Check if ARRAY OR STRING
-	const avgImgQualityIdx = Array.isArray(recipe.image) ? ~~((recipe.image.length - 1) / 2) : null;
 
-	const imgStr = recipe.image instanceof String ? recipe.image : null;
+	// const avgImgQualityIdx = Array.isArray(recipe.image) ? ~~((recipe.image.length - 1) / 2) : null;
+
+	const getRecipeImage = (recipe) => {
+		let imgStr;
+
+		if (Array.isArray(recipe.image)) {
+			const avgImgQualityIdx = ~~((recipe.image.length - 1) / 2);
+			imgStr = recipe.image[avgImgQualityIdx];
+		}
+
+		if (recipe.image instanceof String) {
+			imgStr = recipe.image;
+		}
+
+		if (!Array.isArray(recipe.image) && typeof recipe.image === 'object') {
+			imgStr = recipe.image.url;
+		}
+		return imgStr;
+	};
 	const searchWordsArr = searchWords.split(' ');
+	const imgStr = getRecipeImage(recipe);
 
 	const handleChildClick = () => {
 		handleClick(id);
@@ -80,7 +98,7 @@ const RecipeCard = ({ handleClick, recipeObj, userRecipes, searchWords = '' }) =
 				<CardActionArea className={classes.cardBody} onClick={handleChildClick}>
 					<CardMedia
 						className={classes.media}
-						image={recipe.image[avgImgQualityIdx] || imgStr || noImg}
+						image={imgStr || noImg}
 						title={decodedTitle}
 					/>
 					<CardContent>

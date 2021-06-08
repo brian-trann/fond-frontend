@@ -5,7 +5,8 @@ import GenericList from './GenericList';
 import { filterSpecialChars } from '../helpers/helpers';
 
 const RecipeList = () => {
-	const [ recipes, setRecipes ] = useState({});
+	// const [ recipes, setRecipes ] = useState({});
+	const [ recipes, setRecipes ] = useState([]);
 
 	const [ limit ] = useState(15);
 	const [ skip, setSkip ] = useState(0);
@@ -19,7 +20,7 @@ const RecipeList = () => {
 		const filteredWords = filterSpecialChars(words);
 		const trimmedWords = filteredWords.trim();
 		setSkip(0);
-		setRecipes({});
+		setRecipes([]);
 		setSearch(trimmedWords);
 	};
 
@@ -28,16 +29,21 @@ const RecipeList = () => {
 			const fetchRecipes = async (limit, skip, search) => {
 				const res = await FondApi.getRecipes(limit, skip, search);
 
+				// const formattedRecipes = res.reduce((acc, curr) => {
+				// 	const { id, url, raw_recipe, keywords, title } = curr;
+				// 	const recipe = JSON.parse(raw_recipe);
+				// 	return {
+				// 		...acc,
+				// 		[id] : { url, keywords, title, id, recipe }
+				// 	};
+				// }, {});
 				const formattedRecipes = res.reduce((acc, curr) => {
 					const { id, url, raw_recipe, keywords, title } = curr;
 					const recipe = JSON.parse(raw_recipe);
-					return {
-						...acc,
-						[id] : { url, keywords, title, id, recipe }
-					};
-				}, {});
+					return [ ...acc, { url, keywords, title, id, recipe } ];
+				}, []);
 
-				setRecipes((oldRecipes) => ({ ...oldRecipes, ...formattedRecipes }));
+				setRecipes((oldRecipes) => oldRecipes.concat(formattedRecipes));
 			};
 			fetchRecipes(limit, skip, search).catch((e) => {
 				console.log(e);

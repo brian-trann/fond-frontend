@@ -1,10 +1,10 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import Grid from '@material-ui/core/Grid';
+// import Button from '@material-ui/core/Button';
+// import Card from '@material-ui/core/Card';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardHeader from '@material-ui/core/CardHeader';
+// import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,45 +17,41 @@ const useStyles = makeStyles((theme) => ({
 		minHeight     : '70vh'
 	},
 	heroContent : {
-		padding : theme.spacing(8, 0, 6)
+		padding    : theme.spacing(8, 0, 6),
+		paddingTop : '20vh'
 	},
-	cardHeader  : {
-		backgroundColor :
-			theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[700]
-	},
-	cardUl      : {
-		margin    : 0,
-		padding   : 0,
-		listStyle : 'none'
+	paragraph   : {
+		padding : theme.spacing(2, 0, 1)
 	}
 }));
 
-const userTypes = [
-	{
-		title         : 'Start now!',
-		description   : [ 'No email needed!', 'Browse recipes', 'Extract recipes from websites' ],
-		buttonText    : 'Start here',
-		buttonLink    : '/recipes',
-		buttonVariant : 'outlined'
-	},
-	{
-		title         : 'Register!',
-		description   : [
-			'Keep track of recipes',
-			'Trello Integration (in dev)',
-			'Export all recipes (in dev)'
-		],
-		buttonText    : 'Sign up',
-		buttonLink    : '/signup',
-		buttonVariant : 'outlined'
-	}
-];
+// const userTypes = [
+// 	{
+// 		title         : 'Start now!',
+// 		description   : [ 'No email needed!', 'Browse recipes', 'Extract recipes from websites' ],
+// 		buttonText    : 'Start here',
+// 		buttonLink    : '/recipes',
+// 		buttonVariant : 'outlined'
+// 	},
+// 	{
+// 		title         : 'Register!',
+// 		description   : [
+// 			'Keep track of recipes',
+// 			'Trello Integration (in dev)',
+// 			'Export all recipes (in dev)'
+// 		],
+// 		buttonText    : 'Sign up',
+// 		buttonLink    : '/signup',
+// 		buttonVariant : 'outlined'
+// 	}
+// ];
 
 const homepageContent = {
 	title          : 'Fond',
 	description    :
-		"Fond is a full stack recipe web app and web scraper built using NodeJS, React, PostgreSQL, and Express. It's goal is to make it easier to see recipe instructions and ingredients and to share recipes with oneself. This project is still in development.",
-	additionalInfo : 'Also, browse over 9000 recipes'
+		"Fond is a full stack recipe web app and web scraper built using NodeJS, React, PostgreSQL, and Express. It's goal is to make it easier to see recipe instructions and ingredients and to share recipes with oneself.",
+	additionalInfo :
+		"The database was populated by the command line tool I created for this project. Fond currently has over 9000 recipes available. The web app's scraping functionality is still in development."
 };
 
 const HomePage = () => {
@@ -75,61 +71,26 @@ const HomePage = () => {
 					>
 						{homepageContent.title}
 					</Typography>
-					<Typography variant='h5' align='center' color='textSecondary' component='p'>
+					<Typography
+						className={classes.paragraph}
+						variant='h5'
+						align='center'
+						color='textSecondary'
+						component='p'
+					>
 						{homepageContent.description}
+					</Typography>
+					<Typography
+						className={classes.paragraph}
+						variant='h5'
+						align='center'
+						color='textSecondary'
+						component='p'
+					>
+						{homepageContent.additionalInfo}
 					</Typography>
 				</Container>
 				{/* End hero unit */}
-				<Container maxWidth='md' component='main'>
-					<Grid container spacing={5} alignItems='center' justify='center'>
-						{userTypes.map(
-							({
-								title,
-								subheader,
-								description,
-								buttonText,
-								buttonLink,
-								buttonVariant
-							}) => (
-								<Grid item key={title} xs={12} sm={6} md={4}>
-									<Card>
-										<CardHeader
-											title={title}
-											subheader={subheader}
-											titleTypographyProps={{ align: 'center' }}
-											subheaderTypographyProps={{ align: 'center' }}
-											className={classes.cardHeader}
-										/>
-										<CardContent>
-											<ul className={classes.cardUl}>
-												{description.map((line) => (
-													<Typography
-														component='li'
-														variant='subtitle1'
-														align='center'
-														key={line}
-													>
-														{line}
-													</Typography>
-												))}
-											</ul>
-										</CardContent>
-										<CardActions>
-											<Button
-												href={buttonLink}
-												fullWidth
-												variant={buttonVariant}
-												color='primary'
-											>
-												{buttonText}
-											</Button>
-										</CardActions>
-									</Card>
-								</Grid>
-							)
-						)}
-					</Grid>
-				</Container>
 			</div>
 		</React.Fragment>
 	);
